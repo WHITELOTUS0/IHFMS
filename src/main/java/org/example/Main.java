@@ -10,6 +10,7 @@ import ihfms.model.Invoice;
 import ihfms.model.Patient;
 import ihfms.observers.MessageBoard;
 import ihfms.observers.Observer;
+import ihfms.external.ExternalBillingSystem;
 
 public class Main {
     public static void main(String[] args) {
