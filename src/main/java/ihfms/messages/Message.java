@@ -1,4 +1,5 @@
 package ihfms.messages;
 
-public class Message {
+public interface Message {
+    void send();
 }

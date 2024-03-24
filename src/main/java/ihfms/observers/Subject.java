@@ -1,4 +1,7 @@
 package ihfms.observers;
 
-public class Subject {
+public interface Subject {
+    void registerObserver(Observer o);
+    void removeObserver(Observer o);
+    void notifyObservers();
 }

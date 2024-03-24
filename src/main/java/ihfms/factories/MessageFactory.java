@@ -1,4 +1,5 @@
 package ihfms.factories;
 
-public class MessageFactory {
+public interface MessageFactory {
+    Message createMessage(String type);
 }

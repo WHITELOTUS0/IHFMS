@@ -1,4 +1,6 @@
 package ihfms.adapters;
+import ihfms.model.Invoice;
 
-public class BillingSystemAdapter {
+public interface BillingSystemAdapter {
+    void processInvoice(Invoice invoice);
 }

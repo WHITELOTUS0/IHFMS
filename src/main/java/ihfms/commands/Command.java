@@ -1,4 +1,5 @@
 package ihfms.commands;
 
-public class Command {
+public interface Command {
+    void execute();
 }
