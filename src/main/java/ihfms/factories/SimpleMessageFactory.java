@@ -2,6 +2,7 @@ package ihfms.factories;
 
 import ihfms.messages.EmailMessage;
 import ihfms.messages.SMSMessage;
+import ihfms.messages.Message;
 
 public class SimpleMessageFactory implements MessageFactory {
     @Override

@@ -1,5 +1,6 @@
 package ihfms.adapters;
 
+import ihfms.external.ExternalBillingSystem;
 import ihfms.model.Invoice;
 
 public class BillingAdapter implements BillingSystemAdapter {
