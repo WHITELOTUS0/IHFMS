@@ -1,8 +1,12 @@
 package ihfms.messages;
 
-import com.twilio.Twilio;
-import com.twilio.rest.api.v2010.account.Message;
-import com.twilio.type.PhoneNumber;
+import ihfms.util.ConfigLoader;
+
+import com.vonage.client.VonageClient;
+import com.vonage.client.sms.MessageStatus;
+import com.vonage.client.sms.messages.TextMessage;
+import com.vonage.client.sms.SmsSubmissionResponseMessage;
+import com.vonage.client.sms.SmsSubmissionResponse;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -12,9 +16,9 @@ public class SMSMessage implements IMessage {
     private String fromPhoneNumber;
     private String content;
 
-    // Twilio Account SID and Auth Token should be stored in environment variables or a config file
-    private static final String ACCOUNT_SID = System.getenv("TWILIO_ACCOUNT_SID");
-    private static final String AUTH_TOKEN = System.getenv("TWILIO_AUTH_TOKEN");
+    // Vonage API key and secret should be stored in environment variables or a config file
+    private static final String VONAGE_API_KEY = ConfigLoader.getProperty("VONAGE_API_KEY");
+    private static final String VONAGE_API_SECRET = ConfigLoader.getProperty("VONAGE_API_SECRET");
 
     public SMSMessage(String fromPhoneNumber, String toPhoneNumber, String content) {
         this.fromPhoneNumber = fromPhoneNumber;
@@ -24,14 +28,22 @@ public class SMSMessage implements IMessage {
 
     @Override
     public void send() {
-        Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
+        VonageClient client = VonageClient.builder()
+                .apiKey(VONAGE_API_KEY)
+                .apiSecret(VONAGE_API_SECRET)
+                .build();
+
+        TextMessage message = new TextMessage(fromPhoneNumber, toPhoneNumber, content);
+
         try {
-            Message message = Message.creator(
-                    new PhoneNumber(this.toPhoneNumber),
-                    new PhoneNumber(this.fromPhoneNumber),
-                    this.content
-            ).create();
-            LOGGER.log(Level.INFO, "SMS sent with SID: {0}", message.getSid());
+            SmsSubmissionResponse response = client.getSmsClient().submitMessage(message);
+            for (SmsSubmissionResponseMessage responseMessage : response.getMessages()) {
+                if (responseMessage.getStatus() == MessageStatus.OK) {
+                    LOGGER.log(Level.INFO, "SMS sent successfully with ID: {0}", responseMessage);
+                } else {
+                    LOGGER.log(Level.SEVERE, "SMS failed with error: {0}", responseMessage.getErrorText());
+                }
+            }
         } catch (Exception e) {
             LOGGER.log(Level.SEVERE, "Failed to send SMS: {0}", e.getMessage());
         }

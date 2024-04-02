@@ -1,11 +1,18 @@
 package ihfms.messages;
 
-import com.sendgrid.*;
-import java.io.IOException;
+import ihfms.util.ConfigLoader;
+
+import sendinblue.ApiClient;
+import sendinblue.Configuration;
+import sendinblue.auth.ApiKeyAuth;
+import sibApi.TransactionalEmailsApi;
+import sibModel.SendSmtpEmail;
+import sibModel.SendSmtpEmailSender;
+import sibModel.SendSmtpEmailTo;
+
+import java.util.Collections;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import com.sendgrid.helpers.mail.Mail;
-import com.sendgrid.helpers.mail.objects.*;
 
 public class EmailMessage implements IMessage {
     private static final Logger LOGGER = Logger.getLogger(EmailMessage.class.getName());
@@ -23,21 +30,24 @@ public class EmailMessage implements IMessage {
 
     @Override
     public void send() {
-        Email from = new Email(this.fromEmail);
-        Email to = new Email(this.toEmail);
-        Content content = new Content("text/plain", this.content);
-        Mail mail = new Mail(from, this.subject, to, content);
+        String sendinblueApiKey = ConfigLoader.getProperty("SENDINBLUE_API_KEY");
+        ApiClient apiClient = Configuration.getDefaultApiClient();
+        ApiKeyAuth apiKey = (ApiKeyAuth) apiClient.getAuthentication("api-key");
+        apiKey.setApiKey(sendinblueApiKey);
 
-        SendGrid sg = new SendGrid(System.getenv("SENDGRID_API_KEY")); // Retrieve API key from environment
-        Request request = new Request();
+        TransactionalEmailsApi apiInstance = new TransactionalEmailsApi();
+        SendSmtpEmail sendSmtpEmail = new SendSmtpEmail();
+
+        sendSmtpEmail.setSender(new SendSmtpEmailSender().email(this.fromEmail));
+        sendSmtpEmail.setTo(Collections.singletonList(new SendSmtpEmailTo().email(this.toEmail)));
+        sendSmtpEmail.setSubject(this.subject);
+        sendSmtpEmail.setHtmlContent(this.content);
+
         try {
-            request.setMethod(Method.POST);
-            request.setEndpoint("mail/send");
-            request.setBody(mail.build());
-            Response response = sg.api(request);
-            LOGGER.log(Level.INFO, "Email sent with status code: {0}", response.getStatusCode());
-        } catch (IOException ex) {
-            LOGGER.log(Level.SEVERE, "Failed to send email: {0}", ex.getMessage());
+            apiInstance.sendTransacEmail(sendSmtpEmail);
+            LOGGER.log(Level.INFO, "Email sent successfully to {0}", this.toEmail);
+        } catch (Exception e) {
+            LOGGER.log(Level.SEVERE, "Failed to send email: {0}", e.getMessage());
         }
     }
 
