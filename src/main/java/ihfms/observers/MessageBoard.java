@@ -1,13 +1,13 @@
 package ihfms.observers;
 
-import ihfms.messages.Message;
+import ihfms.messages.IMessage;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class MessageBoard implements Subject {
     private final List<Observer> observers = new ArrayList<>();
-    private Message message;
+    private IMessage message;
 
     @Override
     public void registerObserver(Observer o) {
@@ -26,7 +26,7 @@ public class MessageBoard implements Subject {
         }
     }
 
-    public void postNewMessage(Message message) {
+    public void postNewMessage(IMessage message) {
         this.message = message;
         notifyObservers();
     }

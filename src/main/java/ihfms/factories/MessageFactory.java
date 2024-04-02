@@ -1,6 +1,7 @@
 package ihfms.factories;
-import ihfms.messages.Message;
+
+import ihfms.messages.IMessage;
 
 public interface MessageFactory {
-    Message createMessage(String type);
+    IMessage createMessage(String type, String from, String to, String subject, String content);
 }

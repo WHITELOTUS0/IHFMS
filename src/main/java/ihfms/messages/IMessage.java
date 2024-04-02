@@ -1,6 +1,6 @@
 package ihfms.messages;
 
-public interface Message {
+public interface IMessage {
     void send();
     String getContent();
     void setContent(String content);

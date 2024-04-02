@@ -1,4 +1,4 @@
-import ihfms.messages.Message;
+import ihfms.messages.IMessage;
 import ihfms.observers.MessageBoard;
 import ihfms.observers.Observer;
 import org.junit.jupiter.api.BeforeEach;
@@ -11,13 +11,13 @@ import static org.mockito.Mockito.verify;
 public class MessageBoardTest {
     private MessageBoard messageBoard;
     private Observer observer;
-    private Message message;
+    private IMessage message;
 
     @BeforeEach
     public void setUp() {
         messageBoard = new MessageBoard();
         observer = Mockito.mock(Observer.class);
-        message = Mockito.mock(Message.class);
+        message = Mockito.mock(IMessage.class);
         messageBoard.registerObserver(observer);
     }
 

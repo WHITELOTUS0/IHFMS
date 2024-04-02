@@ -5,7 +5,7 @@ import ihfms.adapters.BillingSystemAdapter;
 import ihfms.commands.ProcessInvoiceCommand;
 import ihfms.factories.MessageFactory;
 import ihfms.factories.SimpleMessageFactory;
-import ihfms.messages.Message;
+import ihfms.messages.IMessage;
 import ihfms.model.Invoice;
 import ihfms.model.Patient;
 import ihfms.observers.MessageBoard;
@@ -31,7 +31,7 @@ public class Main {
         // Example observer that will listen for messages
         Observer messageObserver = new Observer() {
             @Override
-            public void update(Message message) {
+            public void update(IMessage message) {
                 System.out.println("New message received: " + message.getContent());
             }
         };
@@ -55,9 +55,15 @@ public class Main {
         processInvoiceCommand.execute();
 
         // Create and send a message using the factory and observer patterns
-        Message message = messageFactory.createMessage("Email");
-        message.setContent("Invoice processed for patient: " + patient.getFirstName() + " " + patient.getLastName());
-        messageBoard.postNewMessage(message);
+
+        IMessage message = messageFactory.createMessage(
+                "Email",
+                "from@example.com",
+                "to@example.com",
+                "Invoice Processed",
+                "Invoice processed for patient: " + patient.getFirstName() + " " + patient.getLastName()
+        );
+        message.send(); // Send the email
 
         System.out.println("Integrated Health Finance Management System is running.");
     }
