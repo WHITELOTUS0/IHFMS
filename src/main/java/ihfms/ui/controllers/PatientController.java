@@ -31,6 +31,10 @@ public class PatientController {
     private TextField inputFirstName;
     @FXML
     private TextField inputLastName;
+    @FXML
+    private TextField inputPhoneNumber;
+    @FXML
+    private TextField inputEmail;
     // Add other input fields as needed
 
     private ObservableList<Patient> patientData;
@@ -54,6 +58,8 @@ public class PatientController {
         newPatient.setPatientID(inputPatientID.getText());
         newPatient.setFirstName(inputFirstName.getText());
         newPatient.setLastName(inputLastName.getText());
+        newPatient.setPhoneNumber(inputPhoneNumber.getText()); // Set phone number
+        newPatient.setEmail(inputEmail.getText());
         // Set other properties from input fields
 
         patientData.add(newPatient);
@@ -61,6 +67,8 @@ public class PatientController {
         inputPatientID.clear();
         inputFirstName.clear();
         inputLastName.clear();
+        inputPhoneNumber.clear(); // Clear phone number field
+        inputEmail.clear();
         // Clear other input fields
     }
 

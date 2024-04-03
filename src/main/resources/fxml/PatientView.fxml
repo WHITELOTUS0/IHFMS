@@ -19,8 +19,9 @@
         <TextField fx:id="inputPatientID" promptText="Patient ID"/>
         <TextField fx:id="inputFirstName" promptText="First Name"/>
         <TextField fx:id="inputLastName" promptText="Last Name"/>
-        <!-- Add more input fields as needed -->
+        <TextField fx:id="inputPhoneNumber" promptText="Phone Number"/> <!-- New field for phone number -->
+        <TextField fx:id="inputEmail" promptText="Email"/> <!-- New field for email -->
         <Button text="Add Patient" onAction="#handleAddPatient"/>
-        <Button text="Create Invoice" onAction="#handleNavigateToCreateInvoice"/> <!-- New button for navigating to InvoiceView -->
+        <Button text="Create Invoice" onAction="#handleNavigateToCreateInvoice"/> <!-- Button for navigating to InvoiceView -->
     </VBox>
 </AnchorPane>

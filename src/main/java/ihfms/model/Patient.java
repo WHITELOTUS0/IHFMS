@@ -12,6 +12,8 @@ public class Patient {
     private String gender; // Could also be refactored to use a Property if needed
     private String contactInfo; // Could also be refactored to use a Property if needed
 
+    private final StringProperty phoneNumber = new SimpleStringProperty(this, "phoneNumber");
+    private final StringProperty email = new SimpleStringProperty(this, "email");
     // Getters and setters for properties
     public String getPatientID() { return patientID.get(); }
     public void setPatientID(String value) { patientID.set(value); }
@@ -24,6 +26,14 @@ public class Patient {
     public String getLastName() { return lastName.get(); }
     public void setLastName(String value) { lastName.set(value); }
     public StringProperty lastNameProperty() { return lastName; }
+
+    public String getPhoneNumber() { return phoneNumber.get(); }
+    public void setPhoneNumber(String value) { phoneNumber.set(value); }
+    public StringProperty phoneNumberProperty() { return phoneNumber; }
+
+    public String getEmail() { return email.get(); }
+    public void setEmail(String value) { email.set(value); }
+    public StringProperty emailProperty() { return email; }
 
     // Getters and setters for other fields
     public Date getDateOfBirth() { return dateOfBirth; }
