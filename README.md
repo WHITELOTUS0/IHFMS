@@ -26,6 +26,15 @@ To build the project, navigate to the root directory where the `pom.xml` file is
 ```shell
 mvn clean install
 ```
+This command will compile the project and run any tests.
+
+### Running the Application
+After building the project, you can run the application using:
+
+```shell
+java -jar target/ihfms-1.0-SNAPSHOT.jar
+```
+Replace `ihfms-1.0-SNAPSHOT.jar` with the actual name of your compiled JAR file.
 
 ### Contributing
 We welcome contributions to the IHFMS project. If you would like to contribute, please follow these steps:
