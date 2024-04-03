@@ -12,11 +12,12 @@
     <VBox spacing="10.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
         <Text text="Patients"/>
         <TableView fx:id="tablePatients">
-            <TableColumn text="ID"/>
-            <TableColumn text="First Name"/>
-            <TableColumn text="Last Name"/>
+            <TableColumn fx:id="columnPatientID" text="ID"/>
+            <TableColumn fx:id="columnFirstName" text="First Name"/>
+            <TableColumn fx:id="columnLastName" text="Last Name"/>
             <!-- Add more columns as needed -->
         </TableView>
+        <TextField fx:id="inputPatientID" promptText="Patient ID"/>
         <TextField fx:id="inputFirstName" promptText="First Name"/>
         <TextField fx:id="inputLastName" promptText="Last Name"/>
         <!-- Add more input fields as needed -->

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<VBox xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ihfms.ui.controllers.InvoiceController" spacing="10">
+    <padding>
+        <Insets top="10" right="10" bottom="10" left="10"/>
+    </padding>
+    <Label text="Create Invoice"/>
+
+    <HBox spacing="10">
+        <Label text="Select Patient:"/>
+        <ComboBox fx:id="comboPatients" prefWidth="200"/>
+    </HBox>
+
+    <HBox spacing="10">
+        <Label text="Invoice Amount:"/>
+        <TextField fx:id="inputAmount" promptText="Amount"/>
+    </HBox>
+
+    <Button text="Create Invoice" onAction="#handleCreateInvoice"/>
+</VBox>

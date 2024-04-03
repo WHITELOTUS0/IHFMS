@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ihfms.ui.controllers.MainViewController" spacing="10" alignment="CENTER">
+    <Button text="Add Patient" fx:id="btnAddPatient" onAction="#handleAddPatient"/>
+    <Button text="Create Invoice" fx:id="btnCreateInvoice" onAction="#handleCreateInvoice"/>
+</VBox>

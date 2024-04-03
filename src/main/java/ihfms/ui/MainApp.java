@@ -10,10 +10,8 @@ public class MainApp extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("/fxml/PatientView.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/fxml/MainView.fxml"));
         Scene scene = new Scene(root);
-        scene.getStylesheets().add(getClass().getResource("/css/main.css").toExternalForm());
-
         primaryStage.setTitle("Integrated Health Finance Management System");
         primaryStage.setScene(scene);
         primaryStage.show();
