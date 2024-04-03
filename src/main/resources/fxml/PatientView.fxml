@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ihfms.ui.controllers.PatientController">
+    <VBox spacing="10.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
+        <Text text="Patients"/>
+        <TableView fx:id="tablePatients">
+            <TableColumn text="ID"/>
+            <TableColumn text="First Name"/>
+            <TableColumn text="Last Name"/>
+            <!-- Add more columns as needed -->
+        </TableView>
+        <TextField fx:id="inputFirstName" promptText="First Name"/>
+        <TextField fx:id="inputLastName" promptText="Last Name"/>
+        <!-- Add more input fields as needed -->
+        <Button text="Add Patient" onAction="#handleAddPatient"/>
+    </VBox>
+</AnchorPane>
