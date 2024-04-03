@@ -10,6 +10,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -46,7 +47,17 @@ public class MainViewController {
             patientController.setPatientData(patientData); // Pass the shared patientData list
 
             Stage stage = (Stage) btnAddPatient.getScene().getWindow();
-            stage.setScene(new Scene(patientViewRoot));
+            // Set the preferred width and height to half of the screen size
+            double screenWidth = Screen.getPrimary().getBounds().getWidth();
+            double screenHeight = Screen.getPrimary().getBounds().getHeight();
+            Scene scene = new Scene(patientViewRoot, screenWidth / 2, screenHeight / 2);
+
+            stage.setScene(scene);
+
+            // Center the stage on the screen
+            stage.setX((screenWidth - scene.getWidth()) / 2);
+            stage.setY((screenHeight - scene.getHeight()) / 2);
+            stage.show();
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
@@ -65,7 +76,16 @@ public class MainViewController {
             invoiceController.setPatientData(patientData); // Pass the shared patientData list
 
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            stage.setScene(new Scene(invoiceViewRoot));
+            // Set the preferred width and height to half of the screen size
+            double screenWidth = Screen.getPrimary().getBounds().getWidth();
+            double screenHeight = Screen.getPrimary().getBounds().getHeight();
+            Scene scene = new Scene(invoiceViewRoot, screenWidth / 2, screenHeight / 2);
+
+            stage.setScene(scene);
+
+            // Center the stage on the screen
+            stage.setX((screenWidth - scene.getWidth()) / 2);
+            stage.setY((screenHeight - scene.getHeight()) / 2);
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();

@@ -59,6 +59,8 @@ public class InvoiceController {
         Patient selectedPatient = comboPatients.getValue();
         double amount = Double.parseDouble(inputAmount.getText());
         Invoice newInvoice = new Invoice();
+        newInvoice.setPatientID(selectedPatient.getPatientID());
+        newInvoice.setAmount(amount);
         // Set properties on the newInvoice object
         // Save the invoice to the system
         // Clear the form or give feedback to the user
@@ -70,12 +72,19 @@ public class InvoiceController {
 
         // Send messages
         SimpleMessageFactory messageFactory = new SimpleMessageFactory();
+        String messageContent = String.format(
+                "Invoice processed for patient: %s %s. Amount: %.2f",
+                selectedPatient.getFirstName(),
+                selectedPatient.getLastName(),
+                amount
+        );
+
         IMessage emailMessage = messageFactory.createMessage(
                 "Email",
                 "ihfms@system.com",
                 selectedPatient.getEmail(),
                 "Invoice Processed",
-                "Invoice processed for patient: " + selectedPatient.getFirstName() + " " + selectedPatient.getLastName()
+                messageContent
         );
         emailMessage.send();
 
@@ -84,7 +93,7 @@ public class InvoiceController {
                 "ihfms",
                 selectedPatient.getPhoneNumber(),
                 "",
-                "Invoice processed for patient: " + selectedPatient.getFirstName() + " " + selectedPatient.getLastName()
+                messageContent
         );
         smsMessage.send();
 
