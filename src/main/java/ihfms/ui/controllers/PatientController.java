@@ -3,9 +3,15 @@ package ihfms.ui.controllers;
 import ihfms.model.Patient;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
+
+import java.io.IOException;
 
 public class PatientController {
 
@@ -56,5 +62,23 @@ public class PatientController {
         inputFirstName.clear();
         inputLastName.clear();
         // Clear other input fields
+    }
+
+    @FXML
+    private void handleNavigateToCreateInvoice() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/InvoiceView.fxml"));
+            Parent invoiceViewRoot = loader.load();
+
+            InvoiceController invoiceController = loader.getController();
+            invoiceController.setPatientData(patientData); // Pass the patient data to the InvoiceController
+
+            Stage stage = (Stage) tablePatients.getScene().getWindow(); // Get the current stage
+            stage.setScene(new Scene(invoiceViewRoot)); // Set the scene to InvoiceView
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+            // Handle the exception
+        }
     }
 }
