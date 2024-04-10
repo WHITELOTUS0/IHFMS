@@ -5,12 +5,42 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.beans.property.DoubleProperty;
 import java.util.Date;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Invoice {
     private final StringProperty invoiceID = new SimpleStringProperty(this, "invoiceID");
     private final StringProperty patientID = new SimpleStringProperty(this, "patientID");
     private final DoubleProperty amount = new SimpleDoubleProperty(this, "amount");
     private Date invoiceDate; // Keep as java.util.Date for now
+    private List<Service> servicesProvided;
+
+    public Invoice() {
+        this.servicesProvided = new ArrayList<>();
+    }
+
+    // Method to add a service to the invoice
+    public void addService(Service service) {
+        servicesProvided.add(service);
+    }
+
+    // Method to calculate the total cost of the invoice
+    public double calculateTotal() {
+        double total = 0.0;
+        for (Service service : servicesProvided) {
+            total += service.getCost();
+        }
+        return total;
+    }
+
+    // Getters and setters
+    public List<Service> getServicesProvided() {
+        return servicesProvided;
+    }
+
+    public void setServicesProvided(List<Service> servicesProvided) {
+        this.servicesProvided = servicesProvided;
+    }
 
     // Getters and setters for properties
     public String getInvoiceID() { return invoiceID.get(); }

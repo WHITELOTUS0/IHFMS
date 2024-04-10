@@ -14,6 +14,19 @@
         <ComboBox fx:id="comboPatients" prefWidth="200"/>
     </HBox>
 
+    <!-- Service Entry Section -->
+    <VBox spacing="10">
+        <Label text="Service Entry"/>
+        <HBox spacing="10">
+            <TextField fx:id="serviceIdField" promptText="Service ID" prefWidth="100"/>
+            <TextField fx:id="descriptionField" promptText="Description" prefWidth="200"/>
+            <TextField fx:id="costField" promptText="Cost" prefWidth="100"/>
+            <Button text="Add Service" onAction="#handleAddService"/>
+        </HBox>
+        <ListView fx:id="servicesListView" prefHeight="100"/>
+    </VBox>
+    <!-- End of Service Entry Section -->
+
     <HBox spacing="10">
         <Label text="Invoice Amount:"/>
         <TextField fx:id="inputAmount" promptText="Amount"/>

@@ -8,6 +8,7 @@ import ihfms.factories.SimpleMessageFactory;
 import ihfms.messages.IMessage;
 import ihfms.model.Invoice;
 import ihfms.model.Patient;
+import ihfms.model.Service;
 import ihfms.observers.MessageBoard;
 import ihfms.observers.Observer;
 import javafx.collections.ObservableList;
@@ -15,6 +16,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.util.StringConverter;
+import javafx.scene.control.ListView;
 
 public class InvoiceController {
 
@@ -22,9 +24,40 @@ public class InvoiceController {
     private ComboBox<Patient> comboPatients;
     @FXML
     private TextField inputAmount;
+    @FXML
+    private TextField serviceIdField;
+    @FXML
+    private TextField descriptionField;
+    @FXML
+    private TextField costField;
+    @FXML
+    private ListView<Service> servicesListView;
 
     private ObservableList<Patient> patientData;
+
     private final MessageBoard messageBoard = new MessageBoard();
+
+    private Invoice currentInvoice;
+
+    public InvoiceController() {
+        currentInvoice = new Invoice();
+    }
+
+    @FXML
+    public void handleAddService() {
+        String serviceId = serviceIdField.getText();
+        String description = descriptionField.getText();
+        double cost = Double.parseDouble(costField.getText());
+
+        Service newService = new Service(serviceId, description, cost);
+        currentInvoice.addService(newService);
+        servicesListView.getItems().add(newService);
+
+        // Clear the input fields after adding the service
+        serviceIdField.clear();
+        descriptionField.clear();
+        costField.clear();
+    }
 
     public void setPatientData(ObservableList<Patient> patientData) {
         this.patientData = patientData;
