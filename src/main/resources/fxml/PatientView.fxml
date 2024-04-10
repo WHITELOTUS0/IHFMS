@@ -27,5 +27,6 @@
         <TextField fx:id="inputEmail" promptText="Email"/>
         <Button text="Add Patient" onAction="#handleAddPatient"/>
         <Button text="Create Invoice" onAction="#handleNavigateToCreateInvoice"/> <!-- Button for navigating to InvoiceView -->
+        <Button text="Generate Report" fx:id="btnGenerateReport" onAction="#handleGenerateReport"/>
     </VBox>
 </AnchorPane>

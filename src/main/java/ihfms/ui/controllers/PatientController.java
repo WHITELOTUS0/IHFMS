@@ -19,6 +19,8 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.io.FileWriter;
+import java.util.List;
 
 public class PatientController {
 
@@ -149,5 +151,43 @@ public class PatientController {
             e.printStackTrace();
             // Handle the exception
         }
+    }
+
+    @FXML
+    private void handleGenerateReport() {
+        try {
+            List<Patient> patients = patientDAO.fetchAllPatients();
+            generateCSVReport(patients);
+            //generatePDFReport(patients);
+            // Show success message or notification to the user
+        } catch (SQLException e) {
+            e.printStackTrace();
+            // Handle SQL exceptions and show error message to the user
+        } catch (IOException e) {
+            e.printStackTrace();
+            // Handle IO exceptions and show error message to the user
+        }
+    }
+
+    private void generateCSVReport(List<Patient> patients) throws IOException {
+        FileWriter csvWriter = new FileWriter("patients_report.csv");
+        // Write CSV header
+        csvWriter.append("Patient ID,First Name,Last Name,Date of Birth,Gender,Contact Info,Phone Number,Email\n");
+        // Write patient data
+        for (Patient patient : patients) {
+            String dateOfBirthStr = (patient.getDateOfBirth() != null) ? patient.getDateOfBirth().toString() : "N/A";
+            csvWriter.append(String.join(",",
+                            String.valueOf(patient.getPatientID()),
+                            patient.getFirstName(),
+                            patient.getLastName(),
+                            dateOfBirthStr,
+                            patient.getGender(),
+                            patient.getContactInfo(),
+                            patient.getPhoneNumber(),
+                            patient.getEmail()))
+                    .append("\n");
+        }
+        csvWriter.flush();
+        csvWriter.close();
     }
 }
