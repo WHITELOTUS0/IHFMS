@@ -118,11 +118,20 @@ public class InvoiceController {
     private void handleCreateInvoice() {
         try {
             Patient selectedPatient = comboPatients.getValue();
-            double amount = Double.parseDouble(inputAmount.getText());
             Invoice newInvoice = new Invoice();
             newInvoice.setPatientID(selectedPatient.getPatientID());
-            newInvoice.setAmount(amount);
-            newInvoice.calculateTotal(); // Calculate the total amount based on the services added
+
+            // Add services to the invoice
+            for (Service service : servicesListView.getItems()) {
+                newInvoice.addService(service);
+            }
+
+            // Calculate the total amount based on the services added
+            double totalAmount = newInvoice.calculateTotal();
+            newInvoice.setAmount(totalAmount);
+
+            // Now the amount should be more than 0.00 if services were added
+            System.out.println("Total invoice amount: " + totalAmount);
 
             // Save the invoice and its services to the database
             invoiceDAO.addInvoice(newInvoice); // Save the invoice
