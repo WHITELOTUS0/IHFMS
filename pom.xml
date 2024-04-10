@@ -46,6 +46,12 @@
             <version>11.0.2</version>
         </dependency>
 
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>8.0.23</version>
+        </dependency>
+
         <!-- Twilio dependency for SMS integration -->
         <dependency>
             <groupId>com.twilio.sdk</groupId>

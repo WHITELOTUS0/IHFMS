@@ -1,5 +1,7 @@
 package ihfms.model;
 
+import ihfms.dao.ServiceDAO;
+
 public class Service {
     private String serviceId;
     private String description;
@@ -34,5 +36,9 @@ public class Service {
 
     public void setCost(double cost) {
         this.cost = cost;
+    }
+
+    public void saveToDatabase(ServiceDAO serviceDAO) {
+        serviceDAO.saveService(this);
     }
 }
