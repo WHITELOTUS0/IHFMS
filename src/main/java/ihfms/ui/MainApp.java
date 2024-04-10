@@ -11,7 +11,7 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 public class MainApp extends Application {
-    private DatabaseConnection dbConnection;
+    private static DatabaseConnection dbConnection;
 
     @Override
     public void init() {
@@ -39,6 +39,10 @@ public class MainApp extends Application {
         primaryStage.setY((screenHeight - scene.getHeight()) / 2);
 
         primaryStage.show();
+    }
+
+    public static DatabaseConnection getDatabaseConnection() {
+        return dbConnection;
     }
 
     public static void main(String[] args) {

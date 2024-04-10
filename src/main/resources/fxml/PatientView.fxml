@@ -14,13 +14,17 @@
             <TableColumn fx:id="columnPatientID" text="ID"/>
             <TableColumn fx:id="columnFirstName" text="First Name"/>
             <TableColumn fx:id="columnLastName" text="Last Name"/>
+            <TableColumn fx:id="columnPhoneNumber" text="Phone Number"/>
+            <TableColumn fx:id="columnEmail" text="Email"/>
             <!-- Add more columns as needed -->
         </TableView>
-        <TextField fx:id="inputPatientID" promptText="Patient ID"/>
         <TextField fx:id="inputFirstName" promptText="First Name"/>
         <TextField fx:id="inputLastName" promptText="Last Name"/>
-        <TextField fx:id="inputPhoneNumber" promptText="Phone Number"/> <!-- New field for phone number -->
-        <TextField fx:id="inputEmail" promptText="Email"/> <!-- New field for email -->
+        <TextField fx:id="inputDateOfBirth" promptText="Date of Birth"/> <!-- Add this line for date of birth -->
+        <TextField fx:id="inputGender" promptText="Gender"/> <!-- Add this line for gender -->
+        <TextField fx:id="inputContactInfo" promptText="Contact Info"/> <!-- Add this line for contact info -->
+        <TextField fx:id="inputPhoneNumber" promptText="Phone Number"/>
+        <TextField fx:id="inputEmail" promptText="Email"/>
         <Button text="Add Patient" onAction="#handleAddPatient"/>
         <Button text="Create Invoice" onAction="#handleNavigateToCreateInvoice"/> <!-- Button for navigating to InvoiceView -->
     </VBox>

@@ -1,16 +1,18 @@
 package ihfms.model;
 
 import javafx.beans.property.SimpleDoubleProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
+import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.StringProperty;
 import java.util.Date;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Invoice {
     private final StringProperty invoiceID = new SimpleStringProperty(this, "invoiceID");
-    private final StringProperty patientID = new SimpleStringProperty(this, "patientID");
+    private final IntegerProperty patientID = new SimpleIntegerProperty(this, "patientID"); // Changed to IntegerProperty
     private final DoubleProperty amount = new SimpleDoubleProperty(this, "amount");
     private Date invoiceDate; // Keep as java.util.Date for now
     private List<Service> servicesProvided;
@@ -30,6 +32,7 @@ public class Invoice {
         for (Service service : servicesProvided) {
             total += service.getCost();
         }
+        amount.set(total); // Update the amount property
         return total;
     }
 
@@ -47,9 +50,9 @@ public class Invoice {
     public void setInvoiceID(String value) { invoiceID.set(value); }
     public StringProperty invoiceIDProperty() { return invoiceID; }
 
-    public String getPatientID() { return patientID.get(); }
-    public void setPatientID(String value) { patientID.set(value); }
-    public StringProperty patientIDProperty() { return patientID; }
+    public int getPatientID() { return patientID.get(); }
+    public void setPatientID(int value) { patientID.set(value); }
+    public IntegerProperty patientIDProperty() { return patientID; }
 
     public double getAmount() { return amount.get(); }
     public void setAmount(double value) { amount.set(value); }

@@ -18,7 +18,7 @@ public class BillingAdapterTest {
         externalBillingSystem = Mockito.mock(ExternalBillingSystem.class);
         billingAdapter = new BillingAdapter(externalBillingSystem);
         invoice = new Invoice();
-        invoice.setPatientID("12345");
+        invoice.setPatientID(1);
         invoice.setAmount(100.0);
     }
 

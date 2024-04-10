@@ -92,10 +92,12 @@ public class InvoiceController {
         Patient selectedPatient = comboPatients.getValue();
         double amount = Double.parseDouble(inputAmount.getText());
         Invoice newInvoice = new Invoice();
-        newInvoice.setPatientID(selectedPatient.getPatientID());
+        newInvoice.setPatientID(selectedPatient.getPatientID()); // This should work correctly now
         newInvoice.setAmount(amount);
+        // Calculate the total amount based on the services added
+        newInvoice.calculateTotal();
         // Set properties on the newInvoice object
-        // Save the invoice to the system
+        // Save the invoice to the system (this part needs to be implemented)
         // Clear the form or give feedback to the user
         // Process the invoice using the command pattern
         ExternalBillingSystem externalBillingSystem = new ExternalBillingSystem();
@@ -109,7 +111,7 @@ public class InvoiceController {
                 "Invoice processed for patient: %s %s. Amount: %.2f",
                 selectedPatient.getFirstName(),
                 selectedPatient.getLastName(),
-                amount
+                newInvoice.getAmount() // Use the calculated total amount
         );
 
         IMessage emailMessage = messageFactory.createMessage(

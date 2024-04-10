@@ -1,7 +1,11 @@
 package ihfms.ui.controllers;
 
+import ihfms.dao.PatientDAO;
 import ihfms.model.Patient;
+import ihfms.ui.MainApp;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -12,32 +16,44 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
 public class PatientController {
 
     @FXML
     private TableView<Patient> tablePatients;
     @FXML
-    private TableColumn<Patient, String> columnPatientID;
-    @FXML
     private TableColumn<Patient, String> columnFirstName;
     @FXML
     private TableColumn<Patient, String> columnLastName;
-    // Add other columns as needed
-
     @FXML
-    private TextField inputPatientID;
+    private TableColumn<Patient, String> columnPhoneNumber;
+    @FXML
+    private TableColumn<Patient, String> columnEmail;
+
     @FXML
     private TextField inputFirstName;
     @FXML
     private TextField inputLastName;
     @FXML
+    private TextField inputDateOfBirth; // Assuming you have a field for date of birth
+    @FXML
+    private TextField inputGender; // Assuming you have a field for gender
+    @FXML
+    private TextField inputContactInfo; // Assuming you have a field for contact info
+    @FXML
     private TextField inputPhoneNumber;
     @FXML
     private TextField inputEmail;
-    // Add other input fields as needed
 
-    private ObservableList<Patient> patientData;
+    private ObservableList<Patient> patientData = FXCollections.observableArrayList();
+    private PatientDAO patientDAO;
+
+    public PatientController() {
+        patientDAO = new PatientDAO(MainApp.getDatabaseConnection());
+    }
 
     public void setPatientData(ObservableList<Patient> patientData) {
         this.patientData = patientData;
@@ -46,34 +62,79 @@ public class PatientController {
 
     @FXML
     private void initialize() {
-        columnPatientID.setCellValueFactory(cellData -> cellData.getValue().patientIDProperty());
         columnFirstName.setCellValueFactory(cellData -> cellData.getValue().firstNameProperty());
         columnLastName.setCellValueFactory(cellData -> cellData.getValue().lastNameProperty());
-        // Initialize other columns
+        columnPhoneNumber.setCellValueFactory(cellData -> cellData.getValue().phoneNumberProperty());
+        columnEmail.setCellValueFactory(cellData -> cellData.getValue().emailProperty());
+
+        tablePatients.setItems(patientData);
     }
 
     @FXML
-    private void handleAddPatient() {
-        Patient newPatient = new Patient();
-        newPatient.setPatientID(inputPatientID.getText());
-        newPatient.setFirstName(inputFirstName.getText());
-        newPatient.setLastName(inputLastName.getText());
-        newPatient.setPhoneNumber(inputPhoneNumber.getText()); // Set phone number
-        newPatient.setEmail(inputEmail.getText());
-        // Set other properties from input fields
+    private void handleAddPatient(ActionEvent event) {
+        try {
+            // Validate input fields (example for first name)
+            String firstName = inputFirstName.getText();
+            if (firstName.isEmpty()) {
+                // Show an error message to the user
+                showErrorMessage("First name cannot be empty.");
+                return;
+            }
 
-        patientData.add(newPatient);
+            Patient newPatient = new Patient();
+            newPatient.setFirstName(firstName);
+            newPatient.setLastName(inputLastName.getText());
+            newPatient.setDateOfBirth(new SimpleDateFormat("yyyy-MM-dd").parse(inputDateOfBirth.getText()));
+            newPatient.setGender(inputGender.getText());
+            newPatient.setContactInfo(inputContactInfo.getText());
+            newPatient.setPhoneNumber(inputPhoneNumber.getText());
+            newPatient.setEmail(inputEmail.getText());
 
-        inputPatientID.clear();
+            patientDAO.addPatient(newPatient);
+            patientData.add(newPatient);
+
+            // Clear the input fields after adding the patient
+            clearInputFields();
+        } catch (ParseException e) {
+            // Log the exception and show an error message to the user
+            logException(e);
+            showErrorMessage("Invalid date format. Please use yyyy-MM-dd.");
+        } catch (SQLException e) {
+            // Log the exception and show an error message to the user
+            logException(e);
+            showErrorMessage("An error occurred while adding the patient. Please try again.");
+        } catch (Exception e) {
+            // Catch any other unexpected exceptions
+            logException(e);
+            showErrorMessage("An unexpected error occurred. Please try again.");
+        }
+    }
+
+    private void logException(Exception e) {
+        // Implement logging here
+        System.err.println("Exception occurred: " + e.getMessage());
+        e.printStackTrace();
+    }
+
+    private void showErrorMessage(String message) {
+        // Implement showing an error message to the user
+        System.err.println(message);
+        // Alternatively, use a dialog box or update the UI to display the message
+    }
+
+    private void clearInputFields() {
         inputFirstName.clear();
         inputLastName.clear();
-        inputPhoneNumber.clear(); // Clear phone number field
+        inputDateOfBirth.clear();
+        inputGender.clear();
+        inputContactInfo.clear();
+        inputPhoneNumber.clear();
         inputEmail.clear();
-        // Clear other input fields
     }
 
+
     @FXML
-    private void handleNavigateToCreateInvoice() {
+    private void handleNavigateToCreateInvoice(ActionEvent event) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/InvoiceView.fxml"));
             Parent invoiceViewRoot = loader.load();
