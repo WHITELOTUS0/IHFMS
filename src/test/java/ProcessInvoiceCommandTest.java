@@ -16,7 +16,7 @@ public class ProcessInvoiceCommandTest {
     public void setUp() {
         billingAdapter = Mockito.mock(BillingSystemAdapter.class);
         invoice = new Invoice();
-        invoice.setInvoiceID("INV-12345");
+        invoice.setInvoiceID(1);
         processInvoiceCommand = new ProcessInvoiceCommand(invoice, billingAdapter);
     }
 

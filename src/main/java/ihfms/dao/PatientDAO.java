@@ -7,6 +7,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class PatientDAO {
     private DatabaseConnection dbConnection;
@@ -36,5 +38,24 @@ public class PatientDAO {
                 }
             }
         }
+    }
+
+    public List<Patient> fetchAllPatients() throws SQLException {
+        List<Patient> patients = new ArrayList<>();
+        String sql = "SELECT * FROM patients";
+        try (Connection conn = dbConnection.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql);
+             ResultSet rs = pstmt.executeQuery()) {
+            while (rs.next()) {
+                Patient patient = new Patient();
+                patient.setPatientID(rs.getInt("patient_id"));
+                patient.setFirstName(rs.getString("first_name"));
+                patient.setLastName(rs.getString("last_name"));
+                // Set other properties from the result set
+                patients.add(patient);
+            }
+        }
+        System.out.println("Fetched " + patients.size() + " patients from the database.");
+        return patients;
     }
 }
