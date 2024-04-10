@@ -146,6 +146,8 @@ public class InvoiceController {
             processInvoiceCommand.execute();
 
             // Send messages
+            System.out.println(selectedPatient.getEmail());
+            System.out.println(selectedPatient.getPhoneNumber());
             SimpleMessageFactory messageFactory = new SimpleMessageFactory();
             String messageContent = String.format(
                     "Invoice processed for patient: %s %s. Amount: %.2f",

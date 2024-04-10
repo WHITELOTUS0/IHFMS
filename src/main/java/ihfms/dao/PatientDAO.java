@@ -51,6 +51,8 @@ public class PatientDAO {
                 patient.setPatientID(rs.getInt("patient_id"));
                 patient.setFirstName(rs.getString("first_name"));
                 patient.setLastName(rs.getString("last_name"));
+                patient.setEmail(rs.getString("email"));
+                patient.setPhoneNumber(rs.getString("phone_number"));
                 // Set other properties from the result set
                 patients.add(patient);
             }
