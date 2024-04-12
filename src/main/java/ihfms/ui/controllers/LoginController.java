@@ -16,6 +16,8 @@ import javafx.stage.Stage;
 public class LoginController {
     @FXML private TextField usernameField;
     @FXML private PasswordField passwordField;
+    @FXML private TextField newUsernameField;
+    @FXML private PasswordField newPasswordField;
 
     private AuthenticationService authService;
 
@@ -45,6 +47,23 @@ public class LoginController {
             // Show login error
             // This should be replaced with a proper error handling mechanism
             System.out.println("Login failed!");
+        }
+    }
+
+    @FXML
+    private void handleCreateAccount() {
+        String username = newUsernameField.getText();
+        String password = newPasswordField.getText();
+        if (username.isEmpty() || password.isEmpty()) {
+            // Show error message: "Username and password cannot be empty"
+            return;
+        }
+        try {
+            authService.createUser(username, password, "user"); // Default role is "user"
+            // Show success message: "Account created successfully"
+        } catch (Exception e) {
+            e.printStackTrace();
+            // Show error message: "Failed to create account"
         }
     }
 }

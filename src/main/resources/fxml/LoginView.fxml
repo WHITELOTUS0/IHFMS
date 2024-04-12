@@ -14,4 +14,12 @@
     <Label text="Password:" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
     <PasswordField fx:id="passwordField" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
     <Button text="Login" onAction="#handleLogin" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+
+    <!-- New registration fields -->
+    <Text text="Create Account" GridPane.columnIndex="0" GridPane.rowIndex="4" GridPane.columnSpan="2"/>
+    <Label text="New Username:" GridPane.columnIndex="0" GridPane.rowIndex="5"/>
+    <TextField fx:id="newUsernameField" GridPane.columnIndex="1" GridPane.rowIndex="5" promptText="New Username"/>
+    <Label text="New Password:" GridPane.columnIndex="0" GridPane.rowIndex="6"/>
+    <PasswordField fx:id="newPasswordField" GridPane.columnIndex="1" GridPane.rowIndex="6" promptText="New Password"/>
+    <Button text="Create Account" onAction="#handleCreateAccount" GridPane.columnIndex="1" GridPane.rowIndex="7"/>
 </GridPane>

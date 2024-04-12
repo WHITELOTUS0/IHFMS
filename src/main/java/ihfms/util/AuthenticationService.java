@@ -25,4 +25,15 @@ public class AuthenticationService {
             return false;
         }
     }
+
+    public void createUser(String username, String password, String role) throws SQLException {
+        String sql = "INSERT INTO users (username, password, role) VALUES (?, ?, ?)";
+        try (Connection conn = dbConnection.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, username);
+            pstmt.setString(2, password); // Consider hashing the password
+            pstmt.setString(3, role);
+            pstmt.executeUpdate();
+        }
+    }
 }
