@@ -9,15 +9,19 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 
 public class LoginController {
     @FXML private TextField usernameField;
     @FXML private PasswordField passwordField;
     @FXML private TextField newUsernameField;
     @FXML private PasswordField newPasswordField;
+    @FXML private Label messageLabel;
 
     private AuthenticationService authService;
 
@@ -55,15 +59,25 @@ public class LoginController {
         String username = newUsernameField.getText();
         String password = newPasswordField.getText();
         if (username.isEmpty() || password.isEmpty()) {
-            // Show error message: "Username and password cannot be empty"
+            showAlert("Error", "Username and password cannot be empty", AlertType.ERROR);
             return;
         }
         try {
             authService.createUser(username, password, "user"); // Default role is "user"
-            // Show success message: "Account created successfully"
+            showAlert("Success", "Account created successfully", AlertType.INFORMATION);
+            newUsernameField.clear();
+            newPasswordField.clear();
         } catch (Exception e) {
             e.printStackTrace();
-            // Show error message: "Failed to create account"
+            showAlert("Error", "Failed to create account", AlertType.ERROR);
         }
+    }
+
+    private void showAlert(String title, String content, AlertType type) {
+        Alert alert = new Alert(type);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(content);
+        alert.showAndWait();
     }
 }

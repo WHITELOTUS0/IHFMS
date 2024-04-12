@@ -22,4 +22,5 @@
     <Label text="New Password:" GridPane.columnIndex="0" GridPane.rowIndex="6"/>
     <PasswordField fx:id="newPasswordField" GridPane.columnIndex="1" GridPane.rowIndex="6" promptText="New Password"/>
     <Button text="Create Account" onAction="#handleCreateAccount" GridPane.columnIndex="1" GridPane.rowIndex="7"/>
+    <Label fx:id="messageLabel" GridPane.columnIndex="0" GridPane.rowIndex="8" GridPane.columnSpan="2"/>
 </GridPane>
